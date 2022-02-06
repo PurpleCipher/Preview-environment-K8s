@@ -1,0 +1,30 @@
+{
+  "name": "preview-environment-k8s",
+  "version": "1.0.0",
+  "description": "Simple server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PurpleCipher/Preview-environment-K8s.git"
+  },
+  "keywords": [
+    "k8"
+  ],
+  "author": "Thompson Edolo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PurpleCipher/Preview-environment-K8s/issues"
+  },
+  "homepage": "https://github.com/PurpleCipher/Preview-environment-K8s#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "g": "^2.0.1",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {}
+}
