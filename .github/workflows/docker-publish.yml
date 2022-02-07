@@ -22,7 +22,6 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -67,3 +66,14 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: Deploy to Kubernetes cluster PR
+        if: ${{ github.event_name == 'pull_request' && ( github.event.pull_request.action == 'opened' || github.event.pull_request.action == 'synchronize') }}
+        uses: ./.github/workflows/k8-deployments.yaml
+        with:
+          deploymentTarget: "pr"
+          prNumber: ${{ github.event.pull_request.number }}
