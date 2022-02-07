@@ -49,10 +49,10 @@ jobs:
           key: kustomize
       - run: |
           ls -la
-          node scripts/generate-kustomization.js $PWD/scripts/kustomization.yaml.sample $PWD/manifests/overlays/pr/kustomization.yaml pr-${{ inputs.prNumber }}-preview
-          node scripts/replace.js pr-${{ inputs.prNumber }}.preview. /spec/rules/0/host ${{ env.BASE_HOST }} $PWD/manifests/overlays/pr/ingress.json
-          node scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/namespace "" $PWD/manifests/overlays/pr/ingress-namespace.json
-          node scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/name "" $PWD/manifests/overlays/pr/namespace.json
+          node $PWD/scripts/generate-kustomization.js $PWD/scripts/kustomization.yaml.sample $PWD/manifests/overlays/pr/kustomization.yaml pr-${{ inputs.prNumber }}-preview
+          node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}.preview. /spec/rules/0/host ${{ env.BASE_HOST }} $PWD/manifests/overlays/pr/ingress.json
+          node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/namespace "" $PWD/manifests/overlays/pr/ingress-namespace.json
+          node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/name "" $PWD/manifests/overlays/pr/namespace.json
           ./kustomize build $PWD/manifests/overlays/pr
 
   staging-deployment:
