@@ -17,13 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ inputs.prNumber }}
-  staging-deployment:
-    if: ${{ inputs.deploymentTarget == 'staging' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
-  prod-deployment:
-    if: ${{ inputs.deploymentTarget == 'production' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
+  # staging-deployment:
+  #   if: ${{ inputs.deploymentTarget == 'staging' }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
+  # prod-deployment:
+  #   if: ${{ inputs.deploymentTarget == 'production' }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
