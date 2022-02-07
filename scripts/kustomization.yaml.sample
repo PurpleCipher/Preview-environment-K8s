@@ -1,0 +1,21 @@
+resources:
+  - ../../app
+
+patches:
+- path: ingress.json
+  target:
+    kind: Ingress
+    name: sendit
+- path: ingress-namespace.json
+  target:
+    kind: Ingress
+    name: sendit
+- path: namespace.json
+  target:
+    kind: Namespace
+
+namespace: ${{namespace}}
+images:
+- name: ghcr.io/purplecipher/preview-environment-k8s
+  newTag: ${{tag}}
+    
