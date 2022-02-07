@@ -32,7 +32,8 @@ jobs:
       - name: Set up Kustomize
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v4.5.1/kustomize_4.5.1_linux_amd64
+          curl -o kustomize.tar.gz --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.1/kustomize_v4.5.1_linux_amd64.tar.gz
+          tar -xf kustomize.tar.gz
           chmod u+x ./kustomize
 
   pr-deployment:
@@ -54,7 +55,7 @@ jobs:
           node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}.preview. /spec/rules/0/host ${{ env.BASE_HOST }} $PWD/manifests/overlays/pr/ingress.json
           node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/namespace "" $PWD/manifests/overlays/pr/ingress-namespace.json
           node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/name "" $PWD/manifests/overlays/pr/namespace.json
-          ./kustomize build $PWD/manifests/overlays/pr
+          kustomize build $PWD/manifests/overlays/pr
 
   staging-deployment:
     if: ${{ inputs.deploymentTarget == 'staging' }}
