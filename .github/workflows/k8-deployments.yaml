@@ -47,6 +47,7 @@ jobs:
           path: kustomize
           key: kustomize
       - run: |
+          ls -la
           node scripts/generate-kustomization.js $PWD/scripts/kustomization.yaml.sample $PWD/manifests/overlays/pr/kustomization.yaml pr-${{ inputs.prNumber }}-preview
           node scripts/replace.js pr-${{ inputs.prNumber }}.preview. /spec/rules/0/host ${{ env.BASE_HOST }} $PWD/manifests/overlays/pr/ingress.json
           node scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/namespace "" $PWD/manifests/overlays/pr/ingress-namespace.json
