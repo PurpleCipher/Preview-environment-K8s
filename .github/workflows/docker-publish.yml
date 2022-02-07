@@ -71,6 +71,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Deploy to Kubernetes cluster PR
         # if: ${{ github.event.pull_request.action != 'closed' }}
         if: ${{ github.event_name == 'pull_request' }}
