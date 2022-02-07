@@ -16,21 +16,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Cache Kustomize
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: kustomize
+          key: kustomize
       - name: Set up Kustomize
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v4.5.1/kustomize_4.5.1_linux_amd64
           chmod u+x ./kustomize
-      - name: Deploy PRs
-        if: ${{ inputs.deploymentTarget == 'pr' }}
-        run: echo ${{ inputs.prNumber }}
 
-  # staging-deployment:
-  #   if: ${{ inputs.deploymentTarget == 'staging' }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
-  # prod-deployment:
-  #   if: ${{ inputs.deploymentTarget == 'production' }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
+  pr-deployment:
+    if: ${{ inputs.deploymentTarget == 'pr' }}
+    runs-on: ubuntu-latest
+    needs: [setup-k8]
+    steps:
+      - name: Cache Kustomize
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: kustomize
+          key: kustomize
+      - run: |
+          echo ${{ inputs.prNumber }}
+          kustomize --version
+
+  staging-deployment:
+    if: ${{ inputs.deploymentTarget == 'staging' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
+
+  prod-deployment:
+    if: ${{ inputs.deploymentTarget == 'production' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
