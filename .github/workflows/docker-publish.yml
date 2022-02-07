@@ -75,3 +75,5 @@ jobs:
     with:
       deploymentTarget: "pr"
       prNumber: ${{ github.event.pull_request.number }}
+    secrets:
+      KUBE_CONFIG: ${{ secrets.KUBECONFIG }}

@@ -17,7 +17,6 @@ on:
 
 env:
   BASE_HOST: sendit.ga
-  BASE_HOST: sendit.ga
 
 jobs:
   setup-k8:
