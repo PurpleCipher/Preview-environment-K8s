@@ -1,0 +1,17 @@
+name: Kubernetes deployment
+on:
+  registry_package:
+    types: [published]
+jobs:
+  pr-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
+  staging-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
+  prod-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
