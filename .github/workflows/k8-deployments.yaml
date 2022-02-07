@@ -20,11 +20,10 @@ jobs:
         run: |
           curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v4.5.1/kustomize_4.5.1_linux_amd64
           chmod u+x ./kustomize
-  pr-deployment:
-    if: ${{ inputs.deploymentTarget == 'pr' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ inputs.prNumber }}
+      - name: Deploy PRs
+        if: ${{ inputs.deploymentTarget == 'pr' }}
+        run: echo ${{ inputs.prNumber }}
+
   # staging-deployment:
   #   if: ${{ inputs.deploymentTarget == 'staging' }}
   #   runs-on: ubuntu-latest
