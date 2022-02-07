@@ -11,6 +11,14 @@ on:
       tag:
         required: false
         type: string
+    secrets:
+      KUBE_CONFIG: 
+        required: true
+
+env:
+  BASE_HOST: sendit.ga
+  BASE_HOST: sendit.ga
+
 jobs:
   setup-k8:
     runs-on: ubuntu-latest
@@ -40,8 +48,11 @@ jobs:
           path: kustomize
           key: kustomize
       - run: |
-          echo ${{ inputs.prNumber }}
-          kustomize --version
+          node scripts/generate-kustomization.js $PWD/scripts/kustomization.yaml.sample $PWD/manifests/overlays/pr/kustomization.yaml pr-5-preview
+          node scripts/replace.js pr-${{ inputs.prNumber }}.preview. /spec/rules/0/host ${{ env.BASE_HOST }} $PWD/manifests/overlays/pr/ingress.json
+          node scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/namespace "" $PWD/manifests/overlays/pr/ingress-namespace.json
+          node scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/name "" $PWD/manifests/overlays/pr/namespace.json
+          ./kustomize build $PWD/manifests/overlays/pr
 
   staging-deployment:
     if: ${{ inputs.deploymentTarget == 'staging' }}
