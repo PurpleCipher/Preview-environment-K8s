@@ -12,6 +12,13 @@ on:
         required: false
         type: string
 jobs:
+  setup-k8:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Kustomize
+        run: |
+          curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v4.5.1/kustomize_4.5.1_linux_amd64
+          chmod u+x ./kustomize
   pr-deployment:
     if: ${{ inputs.deploymentTarget == 'pr' }}
     runs-on: ubuntu-latest
