@@ -1,17 +1,29 @@
 name: Kubernetes deployment
 on:
-  registry_package:
-    types: [published]
+  workflow_call:
+    inputs:
+      deploymentTarget:
+        required: true
+        type: string
+      prNumber:
+        required: false
+        type: number
+      tag:
+        required: false
+        type: string
 jobs:
   pr-deployment:
+    if: ${{ inputs.deploymentTarget == 'pr' }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
+      - run: echo ${{ inputs.prNumber }}
   staging-deployment:
+    if: ${{ inputs.deploymentTarget == 'staging' }}
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
   prod-deployment:
+    if: ${{ inputs.deploymentTarget == 'production' }}
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.event.registry_package.package.package_version.release.tag_name }}
