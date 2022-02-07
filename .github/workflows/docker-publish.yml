@@ -72,7 +72,8 @@ jobs:
     needs: [ build ]
     steps:
       - name: Deploy to Kubernetes cluster PR
-        if: ${{ github.event.pull_request.action != 'closed' }}
+        # if: ${{ github.event.pull_request.action != 'closed' }}
+        if: ${{ github.event_name == 'pull_request' }}
         uses: ./.github/workflows/k8-deployments.yaml
         with:
           deploymentTarget: "pr"
