@@ -70,7 +70,7 @@ jobs:
 
   deploy-to-pr:
     if: ${{ github.event_name == 'pull_request' }}
-    uses: PurpleCipher/Preview-environment-K8s/.github/workflows/k8-deployments.yaml@HEAD
+    uses: PurpleCipher/Preview-environment-K8s/.github/workflows/k8-deployments.yaml@head
     needs: [build]
     with:
       deploymentTarget: "pr"
