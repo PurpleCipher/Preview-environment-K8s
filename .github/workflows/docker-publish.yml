@@ -70,6 +70,7 @@ jobs:
   deploy-to-pr:
     if: ${{ github.event_name == 'pull_request' }}
     uses: ./.github/workflows/k8-deployments.yaml
+    needs: [ build ]
     with:
       deploymentTarget: "pr"
       prNumber: ${{ github.event.pull_request.number }}
