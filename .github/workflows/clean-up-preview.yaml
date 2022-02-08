@@ -1,0 +1,16 @@
+name: Cleanup PR on close
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [closed]
+jobs:
+  delete-pr-namespace:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete from cluster
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: delete namespace pr-${{ github.event.pull_request.number }}-preview
