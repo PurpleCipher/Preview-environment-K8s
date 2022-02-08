@@ -6,3 +6,14 @@ metadata:
     app.resourceType: 'ingress'
   annotations:
     kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: sendit.ga
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: app-svr
+                port:
+                  number: 3000
