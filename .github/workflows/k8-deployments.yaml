@@ -48,14 +48,20 @@ jobs:
         with:
           path: kustomize
           key: kustomize
+      - name: install kubectl
+        run: |
+          curl -LO https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+          kubectl version --client
+          echo ${{ KUBE_CONFIG }} > ~/.kube/config
       - run: |
           ls -la
           mv kustomize /usr/local/bin
           node $PWD/scripts/generate-kustomization.js $PWD/scripts/kustomization.yaml.sample $PWD/manifests/overlays/pr/kustomization.yaml pr-${{ inputs.prNumber }}-preview pr-${{ inputs.prNumber }}
           node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}.preview. /spec/rules/0/host ${{ env.BASE_HOST }} $PWD/manifests/overlays/pr/ingress.json
-          node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/namespace "" $PWD/manifests/overlays/pr/ingress-namespace.json
-          node $PWD/scripts/replace.js pr-${{ inputs.prNumber }}-preview /metadata/name "" $PWD/manifests/overlays/pr/namespace.json
-          kustomize build $PWD/manifests/overlays/pr
+      - name: Deploy to cluster
+        run: |
+          kustomize build $PWD/manifests/overlays/pr | kubectl apply --filename -
 
   staging-deployment:
     if: ${{ inputs.deploymentTarget == 'staging' }}

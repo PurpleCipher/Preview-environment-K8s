@@ -5,14 +5,7 @@ patches:
 - path: ingress.json
   target:
     kind: Ingress
-    name: sendit
-- path: ingress-namespace.json
-  target:
-    kind: Ingress
-    name: sendit
-- path: namespace.json
-  target:
-    kind: Namespace
+    name: sendit-ingress
 
 namespace: ${{namespace}}
 images:

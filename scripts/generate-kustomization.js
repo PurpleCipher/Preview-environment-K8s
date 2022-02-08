@@ -16,4 +16,4 @@ const generate = (path, destination, namespace, tag, fs) => {
 }
 
 
-generate(path, destination, newTag, namespace, fs);
+generate(path, destination, namespace, newTag, fs);
