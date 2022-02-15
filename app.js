@@ -1,6 +1,6 @@
 const express = require('express');
 
-const message = (name) => `Welcome, ${name}!`;
+const message = (name) => `Welcome, ${name}! This is a test`;
 
 const app = express();
 
