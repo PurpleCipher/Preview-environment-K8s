@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/PurpleCipher/Preview-environment-K8s#readme",
   "dependencies": {
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "g": "^2.0.1",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
